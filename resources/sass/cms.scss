@@ -1,0 +1,256 @@
+@import 'variables';
+#cms {
+    display: flex;
+    height: 100vh;
+    position: relative;
+    overflow: hidden !important;
+    aside {
+        height: 100%;
+        max-width: 80%;
+        width: 300px;
+        transition: all ease 0.3s;
+        background-color: $body-bg;
+        .header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 10px 30px 10px;
+            gap: 5px;
+            flex-direction: row;
+            border-bottom:  1px solid rgba($color: $dark, $alpha: .2);
+            img {
+                height: 60px;
+                width: 60px;
+                border-radius: 50%;
+                object-fit: cover;
+                background-color: $secondary;
+            }
+    
+            .header-text {
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+                color: $primary;
+                a {
+                    font-size: large;
+                    font-weight: 700;
+                }
+            }
+
+            
+        }
+    
+        .sidelink.active {
+            background-color: $primary!important;
+            a {
+                color: $light !important;
+            }
+        }
+    
+        .list-group {
+            width: 100%;
+            padding-top: 20px;
+            padding-bottom: 100px;
+            display: flex;
+            gap: 10px;
+            li {
+                list-style-type: none;
+                margin: 0px 20px 0px 20px;
+                padding: 10px 20px 10px 20px;
+                cursor: pointer;
+                position: relative;
+                border-radius: 8px;
+                transition: all ease 0.2s;
+                a {
+                    color: $primary !important;
+                    font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    font-size: medium;
+                    i {
+                        font-size: 20px;
+                        padding-right: 10px;
+                    }
+                }
+            }
+    
+            li:hover {
+                background-color: rgba($color: $primary, $alpha: .1);
+                a {
+                    color: $primary;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 992px) {
+        aside {
+            position: absolute;
+            left: -300px;
+            z-index: 10;
+        }
+
+        .show-sidebar {
+            left: 0px;
+        }
+    }
+
+    .content {
+        width: 100%;
+        min-height: 100vh;
+        overflow-x: auto;
+        background-color: rgba($color: $secondary, $alpha: .08);
+    }
+}
+
+// Navbar Hamburger
+.hamburger {
+    position: absolute;
+    top: 10px;
+    right: 35px;
+}
+
+.checkbox {
+    position: relative;
+    display: block;
+    height: 32px;
+    width: 32px;
+    top: 15px;
+    left: 20px;
+    z-index: 5;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .hamburger-lines {
+    display: block;
+    height: 26px;
+    width: 32px;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .hamburger-lines .line {
+    display: block;
+    height: 4px;
+    width: 100%;
+    border-radius: 10px;
+    background: $primary;
+  }
+
+.hamburger-lines .line1 {
+    transform-origin: 0% 0%;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+.hamburger-lines .line2 {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+.hamburger-lines .line3 {
+    transform-origin: 0% 100%;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+
+.hamburger input[type="checkbox"]:checked ~ .menu-items {
+    transform: translateX(0);
+  }
+  
+.hamburger input[type="checkbox"]:checked ~ .hamburger-lines .line1 {
+    transform: rotate(45deg);
+  }
+  
+.hamburger input[type="checkbox"]:checked ~ .hamburger-lines .line2 {
+    transform: scaleY(0);
+  }
+  
+.hamburger input[type="checkbox"]:checked ~ .hamburger-lines .line3 {
+    transform: rotate(-45deg);
+  }
+
+  .table.dataTable {
+    border-collapse:collapse !important;
+    padding: 10px 0px 10px 0px;
+    thead tr th {
+        background-color: rgba($color: $primary, $alpha: .8);
+        color: $white;
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+    tbody tr td 
+    {    
+        background-color: $white;
+        border: 1px solid rgba($color: $dark, $alpha: .1);
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 14px;
+        div {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+        }
+    }
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    margin-bottom: 20px;
+}
+
+.thumbnail {
+    display: flex;
+    justify-content: center;
+    max-width: 100%; 
+    max-width: 400px;
+    img {
+        width: 100%;
+        max-width: 220px;
+        height: 280px; 
+        object-fit: cover;
+    }
+}
+
+@media (max-width: 350px) {
+    .thumbnail {
+        img {
+            width: 90px !important; 
+            height: 160px !important; 
+        }
+    }
+}
+
+.box-picture {
+    display: flex;
+    width: 100%;
+    gap: 5px;
+
+    img {
+        height: 120px;
+        width: 120px;
+        object-fit: cover;
+        border: 2px solid $primary;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 2px dotted $primary
+    }
+}
+
+.thumbnail-image {
+    border: 2px solid rgba($primary, 0.8);
+    padding: 2px;
+    height: 80px;
+    width: 100px;
+    object-fit: cover;
+}
