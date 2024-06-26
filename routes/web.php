@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SolutionController;
@@ -61,6 +62,8 @@ Route::get('/contact', function() {
     $about = About::first();
     return view('user.contact', compact('about'));
 })->name('contact');
+
+Route::post('/send-email', [MailController::class, 'sendMail']);
 
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 

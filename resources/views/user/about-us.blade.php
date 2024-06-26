@@ -46,16 +46,9 @@
                 </div>
             </div>
         </div> 
-        
-        {{-- chart --}}
-        <div id="myDiagramDiv"></div>
     </div>
 </section>
 @endsection
 
 @section('scripts')
-    <script src="https://unpkg.com/gojs/release/go-debug.js"></script>
-    <script> 
-        const myDiagram = new go.Diagram("myDiagramDiv");
-    </script>
 @endsection
