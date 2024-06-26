@@ -12,7 +12,7 @@ $default-bg: linear-gradient(to left, rgba($primary, 0.7), rgba($primary, 0.7));
 // Navbar Hamburger
 .hamburger {
     position: absolute;
-    top: 40px;
+    top: 50px;
     right: 35px;
     transition: all ease 0.3s;
 }
@@ -132,6 +132,21 @@ $default-bg: linear-gradient(to left, rgba($primary, 0.7), rgba($primary, 0.7));
 .show-sidebar {
     left: 0px;
 }
+.node rect {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+
+  .node text {
+    font: 12px sans-serif;
+  }
+
+  .link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+  }
 .user-navbar {
     position: fixed;
     transition: all .3s ease !important;
@@ -145,7 +160,7 @@ $default-bg: linear-gradient(to left, rgba($primary, 0.7), rgba($primary, 0.7));
     .navbar-content {
         display: flex;
         justify-content: space-between;
-        padding: 45px 20px 45px 20px;
+        padding: 35px 20px 35px 20px;
         text-transform: uppercase;
         .logo-container {
             display: flex;
