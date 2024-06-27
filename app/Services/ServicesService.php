@@ -58,9 +58,11 @@ class ServicesService
 
         if (isset($payload['thumbnail']) && $payload['thumbnail'] instanceof \Illuminate\Http\UploadedFile) {
             if ($service->thumbnail && $service->thumbnail != 'img/default.jpg') {
-                Storage::disk('public')->delete($service->thumbnail);
+               // remove the storage part in the path
+               $adjustedPath = substr($service->thumbnail, 8);
+               Storage::disk('public')->delete($adjustedPath);
             }
-            $path = $payload['thumbnail']->store('thumbnails', 'public');
+            $path = $payload['thumbnail']->store('images', 'public');
             $payload['thumbnail'] = $path;
 
             $service->update([

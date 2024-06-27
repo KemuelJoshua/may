@@ -7,12 +7,12 @@
             <button class="btn btn-secondary" id="add-button">Add</button>
         </div>
         <div class="card p-3 table-card shadow-sm mb-3">
-            <form id="myForm" >
+            <form id="myForm">
                 @csrf
                 <div class="mb-3">
                     <div class="mb-1 box-picture">
                         <img id="imagePreview" src="{{ $about->thumbnail ? asset($about->thumbnail) : asset('img/default.jpg') }}" alt="">
-                        <input onchange="previewImage(event)" id="thumbnail" type="file" name="logo_path" id="logo" accept="image/jpeg, image/png, image/jpg, image/gif">
+                        <input onchange="previewImage(event)" id="thumbnail" type="file" name="thumbnail" accept="image/jpeg, image/png, image/jpg, image/gif">
                     </div>
                     <span id="thumbnail_error" class="text-danger d-none"></span>
                 </div>
@@ -39,7 +39,7 @@
                 <div class="mb-3">
                     <div class="mb-1 box-picture">
                         <img id="imagePreviewCover" src="{{ $about->cover_path ? asset($about->cover_path) : asset('img/default.jpg') }}" alt="">
-                        <input onchange="previewImageCover(event)" id="cover_path" type="file" name="logo_path" id="logo" accept="image/jpeg, image/png, image/jpg, image/gif">
+                        <input onchange="previewImageCover(event)" id="cover_path" type="file" name="cover_path" accept="image/jpeg, image/png, image/jpg, image/gif">
                     </div>
                     <span id="cover_path_error" class="text-danger d-none"></span>
                 </div>
@@ -69,7 +69,7 @@
         }
     }
 
-    // Preview for thumbnail
+    // Preview for cover_path
     function previewImageCover(event) {
         const input = event.target;
         const preview = $('#imagePreviewCover')[0];
@@ -107,11 +107,11 @@
             }
 
             const cover = $('#cover_path')[0].files[0];
-            if (cover_path) {
-                formData.append('cover_path', cover_path);
+            if (cover) {
+                formData.append('cover_path', cover); // Corrected: use `cover`, not `cover_path`
             }
 
-            axios.post(`about-us/1`, formData, {
+            axios.post(`about-us/{{ $about->id }}`, formData, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'multipart/form-data'
@@ -125,19 +125,17 @@
                 });
             })
             .catch(error => {
-                if(error.response && error.response.status === 422) {
+                if (error.response && error.response.status === 422) {
                     // Clear previous error messages
                     $('.text-danger').addClass('d-none');
                     $(`#name`).removeClass('is-invalid');
                     $(`#position`).removeClass('is-invalid');
                     $(`#description`).removeClass('is-invalid');
 
-
+                    // Display validation errors
                     $.each(error.response.data.errors, function(field, errorMessage) {
-                        var errorSpanId = '#' + field + '_error';
+                        var errorSpanId = `#${field}_error`;
                         $(`#${field}`).addClass('is-invalid');
-
-                        // Show the error message in the respective error span
                         $(errorSpanId).removeClass('d-none').text(errorMessage[0]);
                     });
 

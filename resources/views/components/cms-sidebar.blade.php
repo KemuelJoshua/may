@@ -15,6 +15,14 @@
                 </span>
             </a>
         </li>
+        <li class="sidelink {{ request()->routeIs('organizational-chart.index') ? 'active' : '' }}">
+            <a href="{{ route('organizational-chart.index') }}">
+                <i class='bx bxs-dashboard' ></i>
+                <span>
+                    Organizational Chart
+                </span>
+            </a>
+        </li>
         <li class="sidelink {{ request()->routeIs('carousels.index') ? 'active' : '' }}">
             <a href="{{ route('carousels.index') }}">
                 <i class='bx bxs-dashboard' ></i>
