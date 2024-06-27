@@ -19,58 +19,54 @@ class AboutController extends Controller
     }
 
     public function update(UpdateAboutRequest $request, $id)
-    {
-        DB::beginTransaction();
-        try {
-            $payload = $request->validated();
-            // dd($payload);
-            // Retrieve the About record to update
-            $service = About::findOrFail($id);
+{
+    DB::beginTransaction();
+    try {
+        $validatedData = $request->validated();
 
-            // Handle file upload for thumbnail
-            if ($request->hasFile('thumbnail')) {
-                $thumbnailPath = $request->file('thumbnail')->store('images', 'public');
-                // Delete old thumbnail if exists
-                $this->deleteFileIfExists($service->thumbnail);
-                $payload['thumbnail'] = 'storage/' . $thumbnailPath;
-            }
+        // Retrieve the About record to update
+        $service = About::findOrFail($id);
 
-            // Update fields
-            $service->name = $payload['name'];
-            $service->position = $payload['position'];
-            $service->description = $payload['description'];
-    
-            // Handle file upload for cover_path
-            if ($request->hasFile('cover_path')) {
-                $coverPath = $request->file('cover_path')->store('images', 'public');
-                // Delete old cover_path if exists
-                $this->deleteFileIfExists($service->cover_path);
-                $service->cover_path = 'storage/' . $coverPath;
-            }
-    
-            $service->save();
-    
-            DB::commit();
-            return response(['data' => $service, 'status' => 'success'], 200);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response(['message' => $e->getMessage(), 'status' => 'update failed'], 500);
+        // Handle file upload for thumbnail
+        if ($request->hasFile('thumbnail')) {
+            $thumbnailPath = $request->file('thumbnail')->store('images', 'public');
+            // Delete old thumbnail if exists
+            $this->deleteFileIfExists($service->thumbnail);
+            $service->thumbnail = 'storage/' . $thumbnailPath;
         }
-    }
-    
-    // Helper function to delete file if it exists
-    private function deleteFileIfExists($filePath)
-    {
-        if ($filePath && $filePath != 'img/default.jpg' && $filePath != 'img/landing.png') {
-            $adjustedPath = substr($filePath, 8); // Remove 'storage/' prefix
-            Storage::disk('public')->delete($adjustedPath);
+
+        // Update other fields
+        $service->name = $validatedData['name'];
+        $service->position = $validatedData['position'];
+        $service->description = $validatedData['description'];
+
+        // Handle file upload for cover_path
+        if ($request->hasFile('cover_path')) {
+            $coverPath = $request->file('cover_path')->store('images', 'public');
+            // Delete old cover_path if exists
+            $this->deleteFileIfExists($service->cover_path);
+            $service->cover_path = 'storage/' . $coverPath;
         }
-    }
-    
 
-    public function updateCover(Request $request)
-    {
+        // Save changes to the database
+        $service->save();
 
+        DB::commit();
+        return response(['data' => $service, 'status' => 'success'], 200);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response(['message' => $e->getMessage(), 'status' => 'update failed'], 500);
     }
+}
+
+// Helper function to delete file if it exists
+private function deleteFileIfExists($filePath)
+{
+    if ($filePath && $filePath != 'img/default.jpg' && $filePath != 'img/landing.png') {
+        $adjustedPath = substr($filePath, 8); // Remove 'storage/' prefix
+        Storage::disk('public')->delete($adjustedPath);
+    }
+}
+
 
 }
