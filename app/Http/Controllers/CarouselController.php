@@ -39,7 +39,7 @@ class CarouselController extends Controller
             $data = $request->validated();
             if ($request->hasFile('thumbnail')) {
                 $file = $request->file('thumbnail');
-                $path = $file->store('carousels', 'public');
+                $path = $file->store('images', 'public');
                 $data['thumbnail'] = $path;
             } else {
                 $data['thumbnail'] = 'img/default.jpg';

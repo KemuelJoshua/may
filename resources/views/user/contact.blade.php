@@ -4,7 +4,7 @@
     <div class="page-cover">
         <img src="{{ asset($about->cover_path) }}" alt="">
         <div class="container-fluid">
-            <div class="title">
+            <div data-aos="fade-up" class="title">
                 <h5><span>Contact</span>  us</h5>
             </div>
         </div>
@@ -16,7 +16,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <div class="mapouter">
+                <div data-aos="fade-up" class="mapouter">
                     <div class="gmap_canvas">
                         <iframe style="width: 100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=eco%20tower&t=&z=19&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
                         </iframe>
@@ -25,7 +25,7 @@
                 
             </div>
             <div class="col-md-6">
-                <div class="contact-form">
+                <div data-aos="fade-up" class="contact-form">
                     <h2>Get in Touch</h2>
                     <form id="myForm" method="post">
                         @csrf

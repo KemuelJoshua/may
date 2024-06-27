@@ -14,7 +14,7 @@
                 <h4>get help</h4>
                 <ul>
                     <li><a href="#">FAQ</a></li>
-                    <li><a href="#">contacts</a></li>
+                    <li><a href="{{ route('contact') }}">contacts</a></li>
                 </ul>
             </div>
             <div class="footer-col">

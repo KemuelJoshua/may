@@ -4,7 +4,7 @@
     <div class="page-cover">
         <img src="{{ asset($about->cover_path) }}" alt="">
         <div class="container-fluid">
-            <div class="title">
+            <div data-aos="fade-up" class="title">
                 <h5><span>Our </span> Clients</h5>
             </div>
         </div>
@@ -22,7 +22,7 @@
             @foreach ($clients as $item)
             <div class="row">
                 <div class="col-md-4 col-sm-6 logo-item">
-                    <img src="{{ $item->thumbnail }}" alt="partner" class="logo-thumbnail">
+                    <img data-aos="fade-up" src="{{ $item->thumbnail }}" alt="partner" class="logo-thumbnail">
                 </div>
             </div>
             @endforeach
