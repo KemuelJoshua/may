@@ -63,6 +63,28 @@
             ],
         });
 
+        function fetchParents() {
+            axios.get('get-members')
+                .then(function(response) {
+                    // Clear existing options
+                    $('#parentId').empty();
+
+                    // Populate dropdown options
+                    var members = response.data.members;
+                    var select = $('#parentId');
+                    select.append('<option value=" ">-- PLEASE SELECT --</option>');
+
+                    members.forEach(function(member) {
+                        select.append('<option value="' + member.id + '">' + member.name + ' ' + member.lastname + ' (' + member.position + ')' + '</option>');
+                    });
+                })
+                .catch(function(error) {
+                    console.error('Error fetching members:', error);
+                });
+        }
+
+        fetchParents();
+
         const myModal = $('#editModal');
 
         $('#add-button').click(e => {
@@ -112,6 +134,7 @@
                     text: "Your data has been saved.",
                     icon: "success"
                 });
+                fetchParents();
             })
             .catch(error => {
                 if (error.response && error.response.status === 422) {
@@ -210,6 +233,7 @@
                     text: "Your changes have been saved.",
                     icon: "success"
                 });
+                fetchParents();
             })
             .catch(error => {
                 if(error.response && error.response.status === 422) {
@@ -257,17 +281,18 @@
                     axios.delete(`organizational-chart/${id}`)
                     .then(response => {
                         dataTable.ajax.reload();
-                        console.log(response.data.data)
                         Swal.fire({
                             title: "Deleted!",
                             text: "Your data has been deleted.",
                             icon: "success"
                         });
+                        fetchParents();
                     })
                     .catch(error => {
+                        console.log(error.response.data.message);
                         Swal.fire({
                             title: "Oops!",
-                            text: "Something went wrong, try again later!",
+                            text: error.response.data.message,
                             icon: "error"
                         });
                     })
