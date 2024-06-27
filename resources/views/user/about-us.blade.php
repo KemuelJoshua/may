@@ -36,7 +36,7 @@
         </div>
         <div class="row align-items-center pt-2 pb-5">
             <div class="col-md-3 col-sm-6 col-12 mb-3 mb-md-0 d-flex justify-content-center align-items-center">
-                <img data-aos="fade-up" src="{{ $about->thumbnail }}" alt="ceo" class=" image-thumbnail">
+                <img data-aos="fade-up" src="{{ asset($about->thumbnail) }}" alt="ceo" class=" image-thumbnail">
             </div>
             <div class="col-md-9 col-sm-6 col-12">
                 <div data-aos="fade-up" class="details pt-4 pt-md-0">
