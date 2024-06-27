@@ -67,8 +67,8 @@
 
         $(document).ready(function() {
             // User layout sidebar toggle
-            $('#toggleUserSidebar').on('change', function() {
-                var sidebar = $('.user-sidebar');
+            $('#toggleSidebar').on('change', function() {
+                var sidebar = $('.sidebar');
                 sidebar.toggleClass('show-sidebar', this.checked);
             });
         });

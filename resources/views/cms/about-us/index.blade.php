@@ -108,7 +108,7 @@
 
             const cover = $('#cover_path')[0].files[0];
             if (cover) {
-                formData.append('cover_path', cover); // Corrected: use `cover`, not `cover_path`
+                formData.append('cover_path', cover);
             }
 
             axios.post(`about-us/{{ $about->id }}`, formData, {
