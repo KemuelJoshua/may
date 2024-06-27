@@ -63,14 +63,14 @@ class MemberService
     {
         $member = $this->getMember($id);
         
+        if ($member->children()->exists()) {
+            throw new \Exception('This member cannot be deleted as they are a parent of another member(s).');
+        }
+
         if ($member->image && $member->image != 'img/default.jpg') {
             // remove the storage part in the path
             $adjustedPath = substr($member->image, 8);
             Storage::disk('public')->delete($adjustedPath);
-        }
-        
-        if ($member->children()->exists()) {
-            throw new \Exception('Cannot delete member with children.');
         }
 
         $member->delete();
