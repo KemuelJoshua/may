@@ -7,6 +7,7 @@ use App\Http\Requests\StoreAboutRequest;
 use App\Http\Requests\UpdateAboutRequest;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class AboutController extends Controller
@@ -22,46 +23,33 @@ class AboutController extends Controller
         DB::beginTransaction();
         try {
             $payload = $request->validated();
+            // dd($payload);
+            // Retrieve the About record to update
+            $service = About::findOrFail($id);
 
-            // Handle file upload
+            // Handle file upload for thumbnail
             if ($request->hasFile('thumbnail')) {
-                $data['thumbnail'] = $request->file('thumbnail');
+                $thumbnailPath = $request->file('thumbnail')->store('images', 'public');
+                // Delete old thumbnail if exists
+                $this->deleteFileIfExists($service->thumbnail);
+                $payload['thumbnail'] = 'storage/' . $thumbnailPath;
             }
 
-            $service = About::first();
-            if (isset($payload['thumbnail']) && $payload['thumbnail'] instanceof \Illuminate\Http\UploadedFile) {
-                if ($service->thumbnail && $service->thumbnail != 'img/default.jpg') {
-                    Storage::disk('public')->delete($service->thumbnail);
-                }
-                $path = $payload['thumbnail']->store('thumbnails', 'public');
-                $payload['thumbnail'] = $path;
+            // Update fields
+            $service->name = $payload['name'];
+            $service->position = $payload['position'];
+            $service->description = $payload['description'];
     
-                $service->update([
-                    'thumbnail' => 'storage/' . $payload['thumbnail'],
-                    'name' => $payload['name'],
-                    'position' => $payload['position'],
-                    'description' => $payload['description'],
-                ]);
-            } else {
-                $service->update([
-                    'name' => $payload['name'],
-                    'position' => $payload['position'],
-                    'description' => $payload['description'],
-                ]);
+            // Handle file upload for cover_path
+            if ($request->hasFile('cover_path')) {
+                $coverPath = $request->file('cover_path')->store('images', 'public');
+                // Delete old cover_path if exists
+                $this->deleteFileIfExists($service->cover_path);
+                $service->cover_path = 'storage/' . $coverPath;
             }
-            
-            if (isset($payload['cover_path']) && $payload['cover_path'] instanceof \Illuminate\Http\UploadedFile) {
-                if ($service->cover_path && $service->cover_path != 'img/default.jpg') {
-                    Storage::disk('public')->delete($service->cover_path);
-                }
-                $path = $payload['cover_path']->store('cover_paths', 'public');
-                $payload['cover_path'] = $path;
     
-                $service->update([
-                    'cover_path' => 'storage/' . $payload['cover_path'],
-                ]);
-            }
-
+            $service->save();
+    
             DB::commit();
             return response(['data' => $service, 'status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -69,6 +57,16 @@ class AboutController extends Controller
             return response(['message' => $e->getMessage(), 'status' => 'update failed'], 500);
         }
     }
+    
+    // Helper function to delete file if it exists
+    private function deleteFileIfExists($filePath)
+    {
+        if ($filePath && $filePath != 'img/default.jpg' && $filePath != 'img/landing.png') {
+            $adjustedPath = substr($filePath, 8); // Remove 'storage/' prefix
+            Storage::disk('public')->delete($adjustedPath);
+        }
+    }
+    
 
     public function updateCover(Request $request)
     {

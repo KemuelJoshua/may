@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\OrganizationMemberController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ServiceController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\SolutionController;
 use App\Models\About;
 use App\Models\Carousel;
 use App\Models\Client;
+use App\Models\OrganizationMember;
 use App\Models\Partner;
 use App\Models\Service;
 use App\Models\Solution;
@@ -31,7 +33,8 @@ Route::redirect('/', '/about-us');
 Route::get('/about-us', function() {
     $about = About::first();
     $carousel = Carousel::where('isActive', true)->get();
-    return view('user.about-us', compact('about', 'carousel'));
+    $members = OrganizationMember::all();
+    return view('user.about-us', compact('about', 'carousel', 'members'));
 })->name('about-us');
 
 Route::get('/solutions', function() {
@@ -69,6 +72,7 @@ Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 
 Route::prefix('admin')->middleware(['auth'])->group( function() {
     Route::resource('/about-us', AboutController::class)->only('index', 'update');
+    Route::resource('/organizational-chart', OrganizationMemberController::class)->except('show');
     Route::resource('/carousels', CarouselController::class)->except('show');
     Route::resource('/solutions', SolutionController::class)->except('show');
     Route::resource('/services', ServiceController::class)->except('show');
