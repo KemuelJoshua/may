@@ -73,6 +73,7 @@ Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 Route::prefix('admin')->middleware(['auth'])->group( function() {
     Route::resource('/about-us', AboutController::class)->only('index', 'update');
     Route::resource('/organizational-chart', OrganizationMemberController::class)->except('show');
+    Route::get('/get-members', [OrganizationMemberController::class, 'getMembers']);
     Route::resource('/carousels', CarouselController::class)->except('show');
     Route::resource('/solutions', SolutionController::class)->except('show');
     Route::resource('/services', ServiceController::class)->except('show');

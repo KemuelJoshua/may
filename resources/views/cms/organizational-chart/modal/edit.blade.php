@@ -19,12 +19,7 @@
 
                     <div class="mb-3">
                         <label for="parentId" class="form-label">Parent</label>
-                        <select class="form-select" name="parentId" id="parentId">
-                            <option value="">-- please select --</option>
-                            @foreach ($parents as $parent)
-                                <option value="{{ $parent->id }}">{{ $parent->name }} {{ $parent->lastname }} ({{ $parent->position }})</option>
-                            @endforeach
-                        </select>
+                        <select class="form-select" name="parentId" id="parentId"></select>
                         <span id="parent_error" class="text-danger d-none"></span>
                     </div>
                         

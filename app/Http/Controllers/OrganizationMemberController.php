@@ -26,7 +26,15 @@ class OrganizationMemberController extends Controller
             return $this->datatable($parents);
         }
 
-        return view('cms.organizational-chart.index', compact('parents'));
+        return view('cms.organizational-chart.index');
+    }
+
+    public function getMembers()
+    {
+        $parents = OrganizationMember::orderBy('created_at', 'desc')
+        ->get();;
+
+        return response(['members' => $parents, 'status' => 'success']);
     }
 
     public function store(StoreOrganizationMemberRequest $request)
