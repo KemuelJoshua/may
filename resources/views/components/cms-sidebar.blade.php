@@ -1,14 +1,13 @@
 <aside class="sidebar" id="sidebar">
     <div class="header">
-        <img src="{{ !empty($logo->logo_path) ? asset($logo->logo_path) : asset('img/wallpaper.png') }}" alt="Logo image">
+        <img src="{{ asset('img/pasig-science.png') }}" alt="Logo image">
         <div class="header-text">
-           <a>Gallos Photocopy</a>
-            <small>Smart Attendance System</small> 
+           <a>Guidance Managements System</a>
         </div>
     </div>
     <ul class="list-group">
         <li class="sidelink">
-            <a href="{{ route('employees.index') }}">
+            <a href="{{ route('students.index') }}">
                 <i class='bx bxs-dashboard' ></i>
                 <span>
                     Dashboard
@@ -16,26 +15,42 @@
             </a>
         </li>
 
-        <li class="sidelink {{ request()->routeIs('employees.index') ? 'active' : '' }}">
-            <a href="{{ route('employees.index') }}">
-                <i class='bx bxs-hard-hat'></i>
+        <li class="sidelink {{ request()->routeIs('students.index') ? 'active' : '' }}">
+            <a href="{{ route('students.index') }}">
+                <i class='bx bxs-user' ></i>
                 <span>
-                    Employees
+                    Student Record
                 </span>
             </a>
         </li>
 
         <li class="sidelink">
-            <a href="{{ route('employees.index') }}">
-                <i class='bx bxs-time' ></i>
+            <a href="{{ route('students.index') }}">
+                <i class='bx bxs-file-doc' ></i>
                 <span>
-                    Schedule
+                    Add Record
                 </span>
             </a>
         </li>
 
+        <li class="sidelink">
+            <a href="{{ route('students.index') }}">
+                <i class='bx bx-list-check' ></i>
+                <span>
+                    User Logs
+                </span>
+            </a>
+        </li>
 
-        
+        <li class="sidelink">
+            <a href="{{ route('students.index') }}">
+                <i class='bx bx-cog' ></i>
+                <span>
+                    Settings
+                </span>
+            </a>
+        </li>
+
         <li>
             <a href="{{ route('logout') }}"
                 onclick="event.preventDefault();

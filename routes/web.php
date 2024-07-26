@@ -36,5 +36,5 @@ Route::get('/', function() {
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 
 Route::prefix('admin')->middleware(['auth'])->group( function() {
-    Route::resource('/employees', EmployeeController::class);
+    Route::resource('/students', EmployeeController::class);
 });

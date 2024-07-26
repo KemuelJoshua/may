@@ -17,22 +17,8 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\User::factory()->create([
             'name' => 'super admin',
-            'email' => 'admin@novulutions.com',
-            'password' => Hash::make('BlitzDev123Ako'),
-        ]);
-
-        \App\Models\About::factory()->create([
-            'thumbnail' => 'img/default.jpg',
-            'name' => 'This is a sample name',
-            'position' => 'This is a sample position',
-            'description' => 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor ',
-            'cover_path' => 'img/landing.png',
-        ]);
-
-        \App\Models\Carousel::factory()->create([
-            'thumbnail' => 'img/default.jpg',
-            'title' => 'This is a sample name',
-            'description' => 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor ',
+            'email' => 'admin@jehm.com',
+            'password' => Hash::make('password'),
         ]);
     }
 }
