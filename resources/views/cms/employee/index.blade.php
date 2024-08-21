@@ -2,74 +2,62 @@
 
 @section('content')
 <section>
-    @include('cms.employee.modal.edit')
-    @include('cms.employee.modal.show')
     <div class="container-fluid mt-4">
-        <div class="d-flex justify-content-between py-4">
-            <h2 class="page-title">students</h2>
-            <button class="btn btn-secondary" id="add-button">Add</button>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-              <div class="search-box">
-                <input type="text" placeholder="Student Name">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="search-box">
-                <input type="text" placeholder="Student Number">
-              </div>
-            </div>
-          </div>
-        </div>
         <div>
             <!-- Personal Information -->
             <div class="card mb-3">
               <div class="card-header bg-primary text-white">
-                Personal Information
+                Student Profile
               </div>
               <div class="card-body">
-                <p><strong>Email:</strong> example@example.com</p>
-                <p><strong>Full name:</strong> John Doe</p>
-                <p><strong>Grade and Section:</strong> 10-A</p>
-                <p><strong>Age:</strong> 16</p>
-                <p><strong>Address:</strong> 123 Main St, Anytown</p>
-                <p><strong>Birthdate:</strong> January 1, 2008</p>
-                <p><strong>Cellphone number:</strong> 09171234567</p>
-                <p><strong>Landline number:</strong> (02) 123-4567</p>
-                <p><strong>Religion:</strong> Christianity</p>
-              </div>
-            </div>
-      
-            <!-- Educational Background -->
-            <div class="card mb-3">
-              <div class="card-header bg-primary text-white">
-                Educational Background
-              </div>
-              <div class="card-body">
-                <p><strong>Elementary School Attended:</strong> ABC Elementary School</p>
-                <p><strong>G10 School Attended:</strong> XYZ High School</p>
-                <p><strong>Easiest Subject:</strong> Mathematics</p>
-                <p><strong>Most Difficult Subject:</strong> Science</p>
-                <p><strong>Subject/s with lowest grade:</strong> History</p>
-                <p><strong>Subject/s with highest grade:</strong> English</p>
-                <p><strong>Awards & Recognition:</strong> Honor Roll</p>
-                <p><strong>Landline number:</strong> (02) 234-5678</p>
-                <p><strong>Religion:</strong> Christianity</p>
-              </div>
-            </div>
-      
-            <!-- Family Background -->
-            <div class="card mb-3">
-              <div class="card-header bg-primary text-white">
-                Family Background
-              </div>
-              <div class="card-body">
-                <p><strong>Father's Name:</strong> Mr. Doe</p>
-                <p><strong>Father's Age:</strong> 45</p>
-                <p><strong>Educational Attainment:</strong> College Graduate</p>
-                <p><strong>Occupation:</strong> Engineer</p>
-                <p><strong>Contact Number:</strong> 09172345678</p>
+                <form id="myForm">
+                    @csrf
+                    <div class="modal-body">
+                        {{-- <div class="mb-3">
+                            <div class="mb-1 box-picture">
+                                <img id="imagePreview" src="{{ asset('img/default.jpg') }}" alt="">
+                                <input onchange="previewImage(event)" id="picture" type="file" name="picture" accept="image/jpeg, image/png, image/jpg, image/gif">
+                            </div>
+                            <span id="picture_error" class="text-danger d-none"></span>
+                        </div> --}}
+                        
+                        <div class="row mb-3 g-2">
+                            <div class="col-md-6">
+                                <label for="firstname" class="form-label">First Name</label>
+                                <input value="{{ $student_profile->firstname }}" type="text" name="firstname" class="form-control" id="firstname">
+                                <span id="firstname_error" class="text-danger d-none"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastname" class="form-label">Last Name</label>
+                                <input value="{{ $student_profile->lastname }}" type="text" name="lastname" class="form-control" id="lastname">
+                                <span id="lastname_error" class="text-danger d-none"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="mi" class="form-label">Middle Name</label>
+                                <input value="{{ $student_profile->mi }}" type="text" name="mi" class="form-control" id="mi">
+                                <span id="mi_error" class="text-danger d-none"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="age" class="form-label">Age</label>
+                                <input value="{{ $student_profile->age }}" type="text" name="age" class="form-control" id="age">
+                                <span id="age_error" class="text-danger d-none"></span>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="birthday" class="form-label">Birthday</label>
+                                <input value="{{ $student_profile->birthday }}" type="date" class="form-control" name="birthday" id="birthday">
+                                <span id="birthday_error" class="text-danger d-none"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex gap-2">
+                        @isset($student_profile)
+                            <button id="update-button" type="button" class="btn btn-secondary">Update</button>
+                        @else
+                            <button id="submit-button" type="button" class="btn btn-secondary">Add</button>
+                        @endisset
+                        <button type="button" class="btn btn-danger text-white" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
               </div>
             </div>
           </div>
@@ -85,35 +73,7 @@
     };
 
     $(document).ready(function () {
-        // let dataTable = $('#myTable').DataTable({
-        //     "processing": true,
-        //     "serverSide": true,
-        //     "ajax": '{{ route('students.index') }}', // Replace with actual route for students index
-        //     "columns": [
-        //         { "data": "picture_url", "name": "picture_url", "orderable": false, "searchable": false,},
-        //         { "data": "firstname", "name": "firstname", "render": renderWithDiv },
-        //         { "data": "position", "name": "position", "render": renderWithDiv },
-        //         { "data": "actions", "name": "actions", "orderable": false, "searchable": false }
-        //     ],
-        // });
-
         const myModal = $('#editModal');
-
-        // Add Button Click Event
-        $('#add-button').click(e => {
-            $('.modal-title').html('Add student');
-            $('#myForm')[0].reset();
-            $('#submit-button').show();
-            $('#update-button').hide();
-            $('#imagePreview').attr('src', '{{ asset('img/default.jpg') }}');
-
-            // Remove previous errors if any
-            $('.text-danger').addClass('d-none');
-            $('.form-control').removeClass('is-invalid');
-
-            myModal.modal('show');
-        });
-
         // Submit Form (Create)
         $('#submit-button').click(e => {
             e.preventDefault();
@@ -121,20 +81,9 @@
             const formData = new FormData();
             formData.append('firstname', $('#firstname').val());
             formData.append('lastname', $('#lastname').val());
-            formData.append('middlename', $('#middlename').val());
-            formData.append('position', $('#position').val());
-            formData.append('gender', $('#gender').val());
-            formData.append('phone_number', $('#phone_number').val());
-            formData.append('student_number', $('#student_number').val());
-            formData.append('date_started', $('#date_started').val());
-            formData.append('date_stop', $('#date_stop').val());
-            formData.append('status', $('#status').val());
-            formData.append('address', $('#address').val());
-
-            const picture = $('#picture')[0].files[0];
-            if (picture) {
-                formData.append('picture', picture);
-            }
+            formData.append('mi', $('#mi').val());
+            formData.append('age', $('#age').val());
+            formData.append('birthday', $('#birthday').val());
 
             axios.post('{{ route('students.store') }}', formData, {
                 headers: {
@@ -143,7 +92,6 @@
                 }
             })
             .then((response) => {
-                dataTable.ajax.reload();
                 myModal.modal('hide');
                 Swal.fire({
                     title: "Success!",
@@ -217,30 +165,18 @@
             const formData = new FormData();
             formData.append('firstname', $('#firstname').val());
             formData.append('lastname', $('#lastname').val());
-            formData.append('middlename', $('#middlename').val());
-            formData.append('position', $('#position').val());
-            formData.append('gender', $('#gender').val());
-            formData.append('phone_number', $('#phone_number').val());
-            formData.append('student_number', $('#student_number').val());
-            formData.append('date_started', $('#date_started').val());
-            formData.append('date_stop', $('#date_stop').val());
-            formData.append('status', $('#status').val());
-            formData.append('address', $('#address').val());
+            formData.append('mi', $('#mi').val());
+            formData.append('age', $('#age').val());
+            formData.append('birthday', $('#birthday').val());
             formData.append('_method', 'PUT');
 
-            const picture = $('#picture')[0].files[0];
-            if (picture) {
-                formData.append('picture', picture);
-            }
-
-            axios.post(`{{ route('students.update', ['student' => ':id']) }}`.replace(':id', id), formData, {
+            axios.post(`{{ route('students.update', ['student' => ':id']) }}`.replace(':id', 1), formData, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'multipart/form-data'
                 }
             })
             .then((response) => {
-                dataTable.ajax.reload();
                 myModal.modal('hide');
                 Swal.fire({
                     title: "Success!",

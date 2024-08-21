@@ -9,6 +9,7 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SolutionController;
+use App\Http\Controllers\StudentController;
 use App\Models\About;
 use App\Models\Carousel;
 use App\Models\Client;
@@ -36,5 +37,6 @@ Route::get('/', function() {
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 
 Route::prefix('admin')->middleware(['auth'])->group( function() {
-    Route::resource('/students', EmployeeController::class);
+    Route::resource('/students', StudentController::class);
+    
 });

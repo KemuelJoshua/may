@@ -19,7 +19,7 @@
             <a href="{{ route('students.index') }}">
                 <i class='bx bxs-user' ></i>
                 <span>
-                    Student Record
+                    Profile
                 </span>
             </a>
         </li>
